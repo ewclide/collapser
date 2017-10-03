@@ -6,12 +6,12 @@
 		constructor(options)
 		{
 			this.element = $(document.createElement("a"));
-			this.collapsed = options.collapsed || false;
+			this.collapsed = options.opened || false;
 			this.class = options.class || "collapser-button";
 			this.textOpened = options.textOpened || 'скрыть';
 			this.textClosed = options.textClosed || 'подробнее' ;
 			this.speed = options.speed || 250;
-			this.funct = options.funct || "linear";
+			this.func = options.func || "linear";
 			this.block = options.block;
 			this.init(options);
 		}
@@ -31,14 +31,14 @@
 
 		close()
 		{
-			this.block.element.animate({ height: this.block.minHeight }, this.speed, this.funct);
+			this.block.element.animate({ height: this.block.minHeight }, this.speed, this.func);
 			this.element.html(this.textClosed);
 			this.collapsed = true;
 		}
 
 		open()
 	    {
-	    	this.block.element.animate({ height: this.block.maxHeight }, this.speed, this.funct);
+	    	this.block.element.animate({ height: this.block.maxHeight }, this.speed, this.func);
 			this.element.html(this.textOpened);
 			this.collapsed = false;
 		}
@@ -65,18 +65,18 @@
 
 		init(options)
 		{
-			this.minHeight = this.element.attr("data-min-height") || 100;
-			this.maxHeight = this.element.attr("data-max-height") || 500;
+			this.minHeight = options.minHeight || this.element.attr("data-collapse-min-height") || 100;
+			this.maxHeight = options.maxHeight || this.element.attr("data-collapse-max-height") || 500;
 
 			var settings = {
 				block : this,
-				funct : this.element.attr("data-time-func"),
-				append : this.element.attr("data-button-append"),
-				speed : this.element.attr("data-speed"),
-				textOpened : this.element.attr("data-open-text"),
-				textClosed : this.element.attr("data-close-text"),
-				collapsed : this.element.attr("data-collapsed"),
-				class : this.element.attr("data-button-class")
+				func : options.timeFunc || this.element.attr("data-collapse-time-func"),
+				append : options.buttonAppend || this.element.attr("data-collapse-button-append"),
+				speed : options.speed || this.element.attr("data-collapse-speed"),
+				textOpened : options.textOpened || this.element.attr("data-collapse-open-text"),
+				textClosed : options.textClosed || this.element.attr("data-collapse-close-text"),
+				opened : options.opened || this.element.attr("data-collapse-opened"),
+				class : options.buttonClass || this.element.attr("data-collapse-button-class")
 			}
 
 			this.button = new Button(settings);
@@ -133,7 +133,7 @@
 	$.fn.collapse = function(options)
     {
         this.each(function(){
-            if(options) options.element = $(this);
+            if (options) options.element = $(this);
             else options = { element: $(this) }
 			this.collapser = new Block(options);
         });
