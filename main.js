@@ -2,14 +2,13 @@ $(document).ready(function(){
 
 	$('.someclass').collapse({
 		minHeight : 70,
-		maxHeight : 100,
-		timeFunc : "linear",
+		maxHeight : 200,
 		buttonAppend : "#here",
-		speed : 250,
+		speed : 500,
 		textOpened : "opened",
 		textClosed : "closed",
 		opened : true,
 		buttonClass : "theclass"
 	});
-	
+
 });

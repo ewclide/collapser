@@ -66,7 +66,7 @@
 		init(options)
 		{
 			this.minHeight = options.minHeight || this.element.attr("data-collapse-min-height") || 100;
-			this.maxHeight = options.maxHeight || this.element.attr("data-collapse-max-height") || 500;
+			this.maxHeight = options.maxHeight || this.element.attr("data-collapse-max-height");
 
 			var settings = {
 				block : this,
@@ -116,7 +116,7 @@
 	    		}, 10);
 	    	else
 	    	{
-	    		self.maxHeight = height;
+	    		if (!self.maxHeight) self.maxHeight = height;
 	    		if (self.minHeight > height)
 		    	{
 		    		self.minHeight = height;
